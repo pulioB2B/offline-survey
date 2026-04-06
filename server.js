@@ -36,7 +36,7 @@ const db = mysql.createPool({
 });
 
 // ─── 입력 검증 helper ──────────────────────────────────
-const VALID_GENDER = ["male", "female", "other", "prefer_not"];
+const VALID_GENDER = ["male", "female"];
 const VALID_AGE = ["10s", "20s", "30s", "40s", "50s", "60plus"];
 const VALID_PURPOSE = [
   "purchase",
@@ -47,12 +47,9 @@ const VALID_PURPOSE = [
   "gift",
 ];
 const VALID_PRODUCTS = [
-  "skincare_basic",
-  "serum_premium",
-  "sunscreen",
-  "cleansing",
-  "bodycare",
-  "haircare",
+  "leg_massager",
+  "waist_massager",
+  "neck_shoulder_massager",
   "other_product",
 ];
 
