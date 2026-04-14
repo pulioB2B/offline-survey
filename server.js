@@ -13,7 +13,11 @@ app.use(express.json());
 // ─── CORS ──────────────────────────────────────────────
 app.use(
   cors({
-    origin: ["https://yourdomain.com", "https://www.yourdomain.com"],
+    origin: [
+      "https://pulio365.cafe24.com",
+      "https://puliodays.com",
+      "https://m.puliodays.com",
+    ],
     methods: ["GET", "POST"],
     allowedHeaders: ["Content-Type"],
   }),
