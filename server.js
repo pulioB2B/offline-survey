@@ -13,11 +13,7 @@ app.use(express.json());
 // ─── CORS ──────────────────────────────────────────────
 app.use(
   cors({
-    origin: [
-      "https://pulio365.cafe24.com",
-      "https://puliodays.com",
-      "https://m.puliodays.com",
-    ],
+    origin: ["https://yourdomain.com", "https://www.yourdomain.com"],
     methods: ["GET", "POST"],
     allowedHeaders: ["Content-Type"],
   }),
@@ -29,7 +25,6 @@ const db = mysql.createPool({
   user: process.env.DB_USER || "survey_user",
   password: process.env.DB_PASSWORD || "your_password",
   database: process.env.DB_NAME || "survey_db",
-  port: process.env.DB_PORT || 3306,
   waitForConnections: true,
   connectionLimit: 10,
 });
@@ -48,14 +43,12 @@ const AGE_LABEL = {
 };
 const PURPOSE_LABEL = {
   purchase: "구매",
-  browse: "구경/탐색",
-  inquiry: "상담",
   experience: "체험",
   gift: "선물",
+  inquiry: "상담&문의",
 };
 const CAT_LABEL = {
   lower_body: "하체",
-  wellwork: "웰워크",
   back: "등허리",
   neck_shoulder: "목어깨",
   massage_gun: "마사지건",
@@ -65,7 +58,6 @@ const PRODUCT_LABEL = {
   lb_pulley_thigh: "풀리지 허벅지 마사지기",
   lb_calf_v3: "종아리 마사지기 V3",
   lb_boots: "풀리션 마사지 부츠",
-  ww_pullio: "풀리오 웰워크",
   bk_mat: "마사지 매트",
   bk_backpuller: "백풀러 허리 마사지기",
   bk_cushion: "등 허리 쿠션 마사지기",
@@ -76,25 +68,24 @@ const PRODUCT_LABEL = {
   mg_minimax: "미니맥스 마사지건",
   mg_gun_belt: "마사지 건 & 벨트",
   mg_turbofit: "터보핏 마사지건",
+  ww_pullio: "풀리오 웰워크",
   etc_hand: "손 마사지기",
   etc_pediplaner: "패디플래너",
   etc_airgua: "에어괄사 마사지기",
 };
 const BUYPURPOSE_LABEL = {
-  self_use: "본인사용",
-  gift_give: "선물",
-  health: "건강관리",
-  relaxation: "피로해소",
-  rehab: "재활/통증",
-  not_yet: "미정",
+  massage_strength: "마사지강도",
+  design: "디자인만족",
+  price: "합리적가격",
+  gift_give: "선물용",
+  other: "기타",
 };
 const ROUTE_LABEL = {
   sns: "SNS",
   search: "검색",
   friend: "지인추천",
-  pass_by: "지나가다",
-  ad: "광고",
-  revisit: "재방문",
+  pass_by: "지나가다발견",
+  existing: "기존이용자",
 };
 const STORE_LABEL = {
   suwon: "타임빌라스 수원점",
@@ -212,10 +203,9 @@ async function sendSlackNotification(data) {
 // ─── 입력 검증 ────────────────────────────────────────
 const VALID_GENDER = ["male", "female"];
 const VALID_AGE = ["10s", "20s", "30s", "40s", "50s", "60plus"];
-const VALID_PURPOSE = ["purchase", "browse", "inquiry", "experience", "gift"];
+const VALID_PURPOSE = ["purchase", "experience", "gift", "inquiry"];
 const VALID_CATEGORIES = [
   "lower_body",
-  "wellwork",
   "back",
   "neck_shoulder",
   "massage_gun",
@@ -225,7 +215,6 @@ const VALID_PRODUCTS = [
   "lb_pulley_thigh",
   "lb_calf_v3",
   "lb_boots",
-  "ww_pullio",
   "bk_mat",
   "bk_backpuller",
   "bk_cushion",
@@ -236,19 +225,19 @@ const VALID_PRODUCTS = [
   "mg_minimax",
   "mg_gun_belt",
   "mg_turbofit",
+  "ww_pullio",
   "etc_hand",
   "etc_pediplaner",
   "etc_airgua",
 ];
 const VALID_BUY_PURPOSE = [
-  "self_use",
+  "massage_strength",
+  "design",
+  "price",
   "gift_give",
-  "health",
-  "relaxation",
-  "rehab",
-  "not_yet",
+  "other",
 ];
-const VALID_ROUTE = ["sns", "search", "friend", "pass_by", "ad", "revisit"];
+const VALID_ROUTE = ["sns", "search", "friend", "pass_by", "existing"];
 
 const isRating = (v) => Number.isInteger(+v) && +v >= 1 && +v <= 5;
 const filterArr = (arr, valid) =>
