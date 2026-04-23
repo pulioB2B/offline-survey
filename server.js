@@ -94,9 +94,7 @@ const ROUTE_LABEL = {
 };
 const STORE_LABEL = {
   suwon: "타임빌라스 수원점",
-  hongdae: "홍대점",
-  sinchon: "신촌점",
-  jamsil: "잠실점",
+  goyang: "스타필드 고양점",
 };
 
 const stars = (n) => "★".repeat(n) + "☆".repeat(5 - n);
