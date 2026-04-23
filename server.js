@@ -29,6 +29,7 @@ const db = mysql.createPool({
   user: process.env.DB_USER || "survey_user",
   password: process.env.DB_PASSWORD || "your_password",
   database: process.env.DB_NAME || "survey_db",
+  port: process.env.DB_PORT || 3306,
   waitForConnections: true,
   connectionLimit: 10,
 });
